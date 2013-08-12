@@ -53,13 +53,6 @@
       CompressionLevel="high"
       />
 
-    <!-- Well Known SIDS - http://support.microsoft.com/kb/243330 -->
-    <!-- Permissions http://wix.sourceforge.net/manual-wix2/wix_xsd_permission.htm -->
-    <!-- WixQueryOsWellKnownSID http://wix.sourceforge.net/manual-wix3/osinfo.htm -->
-    <PropertyRef Id="WIX_ACCOUNT_LOCALSYSTEM" />
-    <PropertyRef Id="WIX_ACCOUNT_ADMINISTRATORS" />
-    <PropertyRef Id="WIX_ACCOUNT_USERS" />
-
     <!--
       TARGETDIR is Usually C:/  This will also be the location the install package will be copied to
       For more information: http://msdn.microsoft.com/en-us/library/aa372064.aspx
@@ -194,9 +187,8 @@
             <Directory Id="FactsDotD" Name="facts.d">
               <Component Id="PuppetInstallerFacts" Permanent="yes" Guid="4E7C234B-2837-4459-A20E-9503A922FCB9">
                 <CreateFolder>
-                  <Permission GenericAll="yes" User="[WIX_ACCOUNT_ADMINISTRATORS]" />
-                  <Permission GenericAll="yes" User="[WIX_ACCOUNT_LOCALSYSTEM]" />
-                  <Permission GenericRead="yes" GenericExecute="yes" User="[WIX_ACCOUNT_USERS]" />
+                  <Permission GenericAll="yes" User="Administrators" />
+                  <Permission GenericRead="yes" GenericExecute="yes" User="Everyone" />
                 </CreateFolder>
               </Component>
             </Directory>
