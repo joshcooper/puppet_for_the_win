@@ -188,7 +188,14 @@ namespace :windows do
     FileUtils.cp_r(FileList['downloads/puppet/ext/windows/eventlog/*.dll'], 'stagedir/misc')
   end
 
-  task :stage => [:checkout, 'stagedir', :bin, :misc] do
+  task :service => 'stagedir' do
+    mkdir_p("stagedir/service")
+
+    FileUtils.cp_r(FileList['downloads/puppet/ext/windows/service/*'], 'stagedir/service')
+    FileUtils.cp('downloads/mcollective/ext/windows/daemon.bat', 'stagedir/service/mco_daemon.bat')
+  end
+
+  task :stage => [:checkout, 'stagedir', :bin, :misc, :service] do
     FileList["downloads/*"].each do |app|
       dst = "stagedir/#{File.basename(app)}"
       puts "Copying #{app} to #{dst} ..."
