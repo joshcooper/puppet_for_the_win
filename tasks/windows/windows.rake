@@ -185,6 +185,7 @@ namespace :windows do
 
   task :misc => 'stagedir' do
     FileUtils.cp_r("conf/windows/stage/misc", "stagedir/misc")
+    FileUtils.cp_r(FileList['downloads/puppet/ext/windows/eventlog/*.dll'], 'stagedir/misc')
   end
 
   task :stage => [:checkout, 'stagedir', :bin, :misc] do
