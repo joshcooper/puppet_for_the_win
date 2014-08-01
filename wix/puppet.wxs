@@ -356,7 +356,7 @@
             <Directory Id="HieraEtcDir" Name="etc">
               <Component Id="HieraEtcDir" Permanent="yes" Guid="88DE0215-554E-44CC-A8EB-CD8C030B1695">
                 <CreateFolder />
-                <File Id="HieraConf" KeyPath="yes" Source="stagedir\hiera\ext\hiera.yaml" />
+                <File Id="HieraConf" KeyPath="yes" Source="downloads\hiera\ext\hiera.yaml" />
               </Component>
             </Directory>
             <Directory Id="HieraVarDir" Name="var">
