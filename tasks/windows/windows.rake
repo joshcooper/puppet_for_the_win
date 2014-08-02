@@ -208,6 +208,7 @@ namespace :windows do
         src_list = FileList["#{src}/bin", "#{src}/lib", "#{src}/plugins"]
       else
         src_list = FileList["#{src}/bin", "#{src}/lib"]
+        src_list.include("#{src}/LICENSE")
       end
 
       puts "Copying #{src} to #{dst} ..."
