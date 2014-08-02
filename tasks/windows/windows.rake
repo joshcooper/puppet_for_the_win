@@ -163,6 +163,7 @@ namespace :windows do
   task :checkout => :clone do
     APPS.each do |name, config|
       Dir.chdir "#{TOPDIR}/downloads/#{name}" do
+        puts "Fetching #{name} from #{config[:ref]}"
         sh 'git fetch origin'
         sh 'git fetch origin --tags'
         sh 'git clean -xfd'
@@ -197,11 +198,22 @@ namespace :windows do
 
   task :stage => [:checkout, 'stagedir', :bin, :misc, :service] do
     FileList["downloads/*"].each do |app|
-      dst = "stagedir/#{File.basename(app)}"
-      puts "Copying #{app} to #{dst} ..."
-      FileUtils.mkdir(dst)
+      src = File.join(app)
+      dst = File.join('stagedir', File.basename(app))
+
+      case File.basename(app)
+      when 'sys'
+        src_list = FileList["#{src}/ruby", "#{src}/tools"]
+      when 'mcollective'
+        src_list = FileList["#{src}/bin", "#{src}/lib", "#{src}/plugins"]
+      else
+        src_list = FileList["#{src}/bin", "#{src}/lib"]
+      end
+
+      puts "Copying #{src} to #{dst} ..."
+      FileUtils.mkdir_p(dst)
       # This avoids copying hidden files like .gitignore and .git
-      FileUtils.cp_r FileList["#{app}/*"], dst
+      FileUtils.cp_r src_list, dst
     end
   end
 
